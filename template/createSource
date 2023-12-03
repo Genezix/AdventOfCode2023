@@ -5,10 +5,12 @@ dir=$3
 templateFileName=$4
 
 dayDir="${dir}/day${counter}"
-mkdir "${dayDir}"
+mkdir -p "${dayDir}"
 
 fileName=${templateFileName//0/${counter}}
 file="${dayDir}/${fileName}.kt"
+
+echo "Create ${file}"
 
 cp "$templateFileName" "$file"
 # sous windows il faut enlever le premier '' dans le sed

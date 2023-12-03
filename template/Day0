@@ -3,5 +3,5 @@ package adventofcode9999.day0
 import common.execute
 
 fun main() {
-    execute(day = "0") { ProgramDay0(it) }
+    execute(day = "0", year = "9999") { ProgramDay0(it) }
 }

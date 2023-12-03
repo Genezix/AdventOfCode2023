@@ -8,13 +8,15 @@ testKotlin="../src/test/kotlin/adventofcode${year}"
 resources="../src/main/resources/adventofcode${year}"
 kotlin="../src/main/kotlin/adventofcode${year}"
 
-mkdir $testKotlin
-mkdir $resources
-mkdir $kotlin
+mkdir -p $testKotlin
+mkdir -p $resources
+mkdir -p $kotlin
 
 counter=1
 while ((counter!=26))
 do
+  echo "---- Init day${counter} ----"
+  echo "Create ${resources}/day${counter}.txt"
   touch "${resources}/day${counter}.txt"
   ./createSource $year $counter $kotlin $dayFile
   ./createSource $year $counter $kotlin $programDayFile

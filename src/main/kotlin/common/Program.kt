@@ -5,13 +5,13 @@ interface Program {
     fun part2(): String
 }
 
-fun execute(day: String, program: (input: List<String>) -> Program) {
-    executePart(day, "1") { input -> program(input).part1() }
-    executePart(day, "2") { input -> program(input).part2() }
+fun execute(day: String, year: String, program: (input: List<String>) -> Program) {
+    executePart(day, year, "1") { input -> program(input).part1() }
+    executePart(day, year, "2") { input -> program(input).part2() }
 }
 
-fun executePart(day: String, part: String, partFunction: (input: List<String>) -> String) {
-    val input = FileLoader.readFile("adventofcode2022/day${day}.txt")
+fun executePart(day: String, year: String, part: String, partFunction: (input: List<String>) -> String) {
+    val input = FileLoader.readFile("adventofcode$year/day$day.txt")
 
     val startTime = System.currentTimeMillis()
     val resultPart = partFunction(input)
