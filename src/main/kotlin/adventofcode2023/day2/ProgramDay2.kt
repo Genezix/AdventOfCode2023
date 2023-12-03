@@ -42,7 +42,7 @@ class ProgramDay2(brutInputs: List<String>, private val debug: Boolean = false) 
     }
 }
 
-data class Game(val id: Int, val cubeGrabs: List<List<NbCube>>) {
+private data class Game(val id: Int, val cubeGrabs: List<List<NbCube>>) {
     companion object {
         val idRegex = "Game ([0-9]*): .*".toRegex()
         val cubesRegex = "Game [0-9]*: (.*)".toRegex()
@@ -71,8 +71,8 @@ data class Game(val id: Int, val cubeGrabs: List<List<NbCube>>) {
     }
 }
 
-data class NbCube(val nb: Int, val color: CubeColor)
+private data class NbCube(val nb: Int, val color: CubeColor)
 
-enum class CubeColor(val max: Int) {
+private enum class CubeColor(val max: Int) {
     RED(12), GREEN(13), BLUE(14);
 }

@@ -5,10 +5,9 @@ import common.multiply
 
 class ProgramDay3(brutInputs: List<String>, private val debug: Boolean = false) : Program {
     private val inputs = brutInputs
-    private val numberRegex = "[0-9]".toRegex()
     override fun part1(): String {
         val partsGrid = PartsGrid.build(inputs)
-        var sum: Int = 0
+        var sum = 0
         partsGrid.symbols.forEach {
             val neighbors = mutableListOf<List<Part>>()
             it.neighbors.forEach { part ->
@@ -39,7 +38,7 @@ class ProgramDay3(brutInputs: List<String>, private val debug: Boolean = false) 
     }
 }
 
-data class PartsGrid(val symbols: List<Part>, val parts: List<Part>) {
+private data class PartsGrid(val symbols: List<Part>, val parts: List<Part>) {
     companion object {
         private val numberRegex = "[0-9]".toRegex()
         fun build(inputs: List<String>): PartsGrid {
@@ -64,7 +63,7 @@ data class PartsGrid(val symbols: List<Part>, val parts: List<Part>) {
     }
 }
 
-data class Part(val x: Int, val y: Int, val value: Char, var neighbors: List<Part> = emptyList()) {
+private data class Part(val x: Int, val y: Int, val value: Char, var neighbors: List<Part> = emptyList()) {
     fun findAndSetNeighbors(parts: List<Part>) {
         neighbors = listOfNotNull(
             parts.firstOrNull { it.x == x - 1 && it.y == y - 1 },

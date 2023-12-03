@@ -6,8 +6,9 @@ class ProgramDay1(brutInputs: List<String>, private val debug: Boolean = false) 
 
     private val inputs = brutInputs
     private val regexNumber = "[1-9]".toRegex()
-    val regexNumberLetter = ".*(one|two|three|four|five|six|seven|eight|nine|[1-9]).*".toRegex()
-    val regexNumberLetterReversed = ".*(eno|owt|eerht|ruof|evif|xis|neves|thgie|enin|[1-9]).*".toRegex()
+    private val letterNumbers = "one|two|three|four|five|six|seven|eight|nine"
+    private val regexNumberLetter = ".*($letterNumbers|[1-9]).*".toRegex()
+    private val regexNumberLetterReversed = ".*(${letterNumbers.reversed()}|[1-9]).*".toRegex()
 
     override fun part1(): String {
         return inputs.map {
@@ -24,7 +25,7 @@ class ProgramDay1(brutInputs: List<String>, private val debug: Boolean = false) 
     }
 }
 
-fun String.toNum(): String {
+private fun String.toNum(): String {
     return when (this) {
         "one" -> "1"
         "two" -> "2"
