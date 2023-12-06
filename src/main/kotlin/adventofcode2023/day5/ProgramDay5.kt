@@ -31,6 +31,34 @@ data class Almanac(
         return findLocation(element.destination, newIndex)
     }
 
+    private fun List<ElementMapping>.findLocationWithRange(source : ElementType, ranges: List<LongRange>) : List<LongRange> {
+        if(source == ElementType.LOCATION) return ranges
+        val element = this.first { it.source == source }
+        val notMatchingRanges = mutableListOf<LongRange>()
+        val matchingRanges = mutableListOf<LongRange>()
+        val newIndex = element.mappings.firstOrNull { it.sourceRange.contains(ranges) }?.let {
+            val delta = ranges - it.sourceRange.first
+            it.destinationRange.first + delta
+        } ?: ranges
+        return findLocation(element.destination, newIndex)
+    }
+
+    private fun List<ElementMapping>.findMatchingRanges(source : ElementType, range: LongRange) : List<LongRange> {
+        val element = this.first { it.source == source }
+        val matchingRanges =  element.mappings.forEach {
+            elementRange ->
+            elementRange.sourceRange.intersect(range).let {
+//                val delta = it.first() - elementRange.sourceRange.first
+////                val newFirst = elementRange.destinationRange.first + delta
+////                val newRange = LongRange(newFirst, it.last())
+                LongRange(it.first(), it.last())
+            }
+        }
+
+//        range.
+        // TODO trouver tous ceux qui ne match pas
+    }
+
     companion object {
         fun buildRange(inputs: List<List<String>>) : Almanac {
             //seeds: 79 14 55 13
