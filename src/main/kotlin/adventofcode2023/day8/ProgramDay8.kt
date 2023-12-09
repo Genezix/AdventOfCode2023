@@ -105,21 +105,15 @@ class ProgramDay8(brutInputs: List<String>, private val debug: Boolean = false) 
                     mapping[currentNbInstruction]!!
                 } else {
                     while (otherInstructionCount != firstNodeInstructionCounter) {
-                        val mappingAgain = mappings[InstructionNodeMapping(otherInstruction, otherNode)]!!
-                        if (mappingAgain.contains(currentNbInstruction)) {
-                            otherNode = mappingAgain[currentNbInstruction]!!
-                            break
-                        } else {
-                            val nextNode = when (otherInstruction.side) {
-                                "L" -> otherNode.left
-                                "R" -> otherNode.right
-                                else -> error("prout")
-                            }
-
-                            otherInstructionCount++
-                            otherInstruction = otherInstruction.next!!
-                            otherNode = nextNode!!
+                        val nextNode = when (otherInstruction.side) {
+                            "L" -> otherNode.left
+                            "R" -> otherNode.right
+                            else -> error("prout")
                         }
+
+                        otherInstructionCount++
+                        otherInstruction = otherInstruction.next!!
+                        otherNode = nextNode!!
                     }
                     mapping[currentNbInstruction] = otherNode
                     otherNode
