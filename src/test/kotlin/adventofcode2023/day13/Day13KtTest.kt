@@ -6,7 +6,21 @@ import org.junit.Test
 internal class Day13KtTest {
     private val program = ProgramDay13(
         brutInputs = listOf(
-            ""
+            "#.##..##.",
+            "..#.##.#.",
+            "##......#",
+            "##......#",
+            "..#.##.#.",
+            "..##..##.",
+            "#.#.##.#.",
+            "",
+            "#...##..#",
+            "#....#..#",
+            "..##..###",
+            "#####.##.",
+            "#####.##.",
+            "..##..###",
+            "#....#..#",
         ).map { it },
         debug = true
     )
@@ -14,7 +28,63 @@ internal class Day13KtTest {
     @Test
     fun part1() {
         assertEquals(
-            expected = "",
+            expected = "405",
+            actual = program.part1()
+        )
+    }
+
+    @Test
+    fun part1_bis() {
+        val program = ProgramDay13(
+            brutInputs = listOf(
+                "#..###..#####",
+                "###..#.......",
+                ".##.#.#.###..",
+                "#####....####",
+                "#####....####",
+                ".##.#.#.###..",
+                "###..#.......",
+                "#..###..#####",
+                "#.##.##.....#",
+                "#########.###",
+                "#.##.#..#.###",
+                "#.##.#..#.###",
+                "#########.###",
+                "#.##.##.....#",
+                "#.####..#####",
+                "###..#.......",
+                ".##.#.#.###..",
+            ).map { it },
+            debug = true
+        )
+
+        assertEquals(
+            expected = "400",
+            actual = program.part1()
+        )
+    }
+
+    @Test
+    fun part1_ter() {
+        val program = ProgramDay13(
+            brutInputs = listOf(
+                ".#.######.#....",
+                "##.#....#.##..#",
+                "#.##.##.##.####",
+                "#.#...#..#.####",
+                "############..#",
+                "...#.##.#......",
+                "...#....#......",
+                "###.#..#.###..#",
+                "..########..##.",
+                ".##########....",
+                ".#.##..##.#.##.",
+            ).map { it },
+            debug = true
+        )
+
+        assertEquals(
+            expected = "13",
             actual = program.part1()
         )
     }
