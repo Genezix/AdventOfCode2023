@@ -6,7 +6,16 @@ import org.junit.Test
 internal class Day11KtTest {
     private val program = ProgramDay11(
         brutInputs = listOf(
-            ""
+            "...#......",
+            ".......#..",
+            "#.........",
+            "..........",
+            "......#...",
+            ".#........",
+            ".........#",
+            "..........",
+            ".......#..",
+            "#...#.....",
         ).map { it },
         debug = true
     )
@@ -14,7 +23,7 @@ internal class Day11KtTest {
     @Test
     fun part1() {
         assertEquals(
-            expected = "",
+            expected = "374",
             actual = program.part1()
         )
     }
@@ -22,7 +31,7 @@ internal class Day11KtTest {
     @Test
     fun part2() {
         assertEquals(
-            expected = "",
+            expected = "8410",
             actual = program.part2()
         )
     }
