@@ -7,57 +7,65 @@ class ProgramDay13(brutInputs: List<String>, private val debug: Boolean = false)
     private val inputs = brutInputs.parseGroupsList()
 
     override fun part1(): String {
-        return inputs.sumOf { it.findMirrorValue() }.toString()
+        return inputs.mapNotNull { it.findMirrorValue() }.sum().toString()
     }
 
-    private fun List<String>.findMirrorValue(): Int {
-        val horizontalStart = this
-            .indexOfLast { it == this.first() }
-            .takeIf { index -> this.count { this[index] == it } >= 2 }
-            // TODO vérifier que ce qu'il y a au milieu est bien symetrique
-            ?.let { index ->
-                ((index + 1) / 2)
-            }
+    override fun part2(): String {
+        return inputs.sumOf { it.replaceSmudge() }.toString()
+    }
 
-        val horizontalLast = this
-            .indexOfFirst { it == this.last() }
-            .takeIf { index -> this.count { this[index] == it } >= 2 }
-            ?.let { index ->
-                ((this.size - index) / 2) + 1
+    private fun List<String>.replaceSmudge(): Int {
+        val existingSym = this.findMirrorValue()
+        this.forEachIndexed { lineIndex, line ->
+            line.forEachIndexed { charIndex, c ->
+                val result = this.mapIndexed { index, line ->
+                    if (index == lineIndex) {
+                        line.mapIndexed { i, c ->
+                            if (i == charIndex) {
+                                if (c == '.') '#' else '.'
+                            } else c
+                        }.joinToString("")
+                    } else line
+                }.findMirrorValue(existingSym)
+
+                if (result != null) {
+                    return result
+                }
             }
+        }
+        error("prout")
+    }
+
+    private fun List<String>.findMirrorByIndex(indexOne: Int, indexTwo: Int, nb: Int): Int {
+        if (indexOne < 0 || indexTwo >= this.size) return nb
+
+        if (this[indexOne] == this[indexTwo]) {
+            return this.findMirrorByIndex(indexOne - 1, indexTwo + 1, nb + 1)
+        }
+        return 0
+    }
+
+    private fun List<String>.findMirrorValue(filter: Int? = null): Int? {
+        val horizontalIndex = List(this.size) { index ->
+            Pair(index, this.findMirrorByIndex(index, index + 1, 0))
+        }.filter { it.second != 0 }
+            .filter { filter == null || (it.first + 1) * 100 != filter }
+            .maxByOrNull { it.second }?.first
+
+        if (horizontalIndex != null) return (horizontalIndex + 1) * 100
 
         val vertical = this.first().mapIndexed { index, _ ->
             this.map { s -> s[index] }.joinToString(separator = "")
         }
 
-        val verticalStart = vertical
-            .indexOfLast { it == vertical.first() }
-            .takeIf { index -> vertical.count { vertical[index] == it } >= 2 }
-            ?.let { index ->
-                ((index + 1) / 2)
-            }
+        val verticalIndex = List(vertical.size) { index ->
+            Pair(index, vertical.findMirrorByIndex(index, index + 1, 0))
+        }.filter { it.second != 0 }
+            .filter { filter == null || it.first + 1 != filter }
+            .maxByOrNull { it.second }?.first
 
-        val verticalLast = vertical
-            .indexOfFirst { it == vertical.last() }
-            .takeIf { index -> vertical.count { vertical[index] == it } >= 2 }
-            ?.let { index ->
-                (index + (vertical.size - index) / 2) + 1
-            }
+        if (verticalIndex != null) return verticalIndex + 1
 
-        return listOfNotNull(
-            horizontalStart?.let { it * 100 },
-            horizontalLast?.let { it * 100 },
-            verticalStart,
-            verticalLast,
-        ).max()
-
-        // 32946 to low
-        // 34146 to low
-        // 34236 to low
-        // 44806 ??
+        return null
     }
-
-    override fun part2(): String = ""
-
-    private data class LineByIndex(val index: Int, val line: String)
 }
